@@ -25,6 +25,9 @@ class Navigator:
 
         if(self.checkValidityOfFile(base_path)):
             os.chdir(base_path) # -> You are in ~/Videos now
+        else:
+            print("[!] I couldn't move to $HOME/Videos")
+            print("[ :) ] Are you sure that there is a directory named Videos in your home directory? OR\nAre you sure that the enviroment variable $HOME is defined?")
     
     def changeToMusicFolder(self):
         """
@@ -38,6 +41,9 @@ class Navigator:
 
         if(self.checkValidityOfFile(base_path)):
             os.chdir(base_path) # -> You are in ~/Music now
+        else:
+            print("[!] I couldn't move to $HOME/Music")
+            print("[ :) ] Are you sure that there is a directory named Music in your home directory? OR\nAre you sure that the enviroment variable $HOME is defined?")
     
     def dealWithTheFileOfURLs(self, filename):
         """
@@ -54,4 +60,4 @@ class Navigator:
             return urls
         else:
             print("[!] File Validity -> FAILED")
-            print("[!] Please check that the path is correct")
+            print("[!] Please check if the path name is correct")

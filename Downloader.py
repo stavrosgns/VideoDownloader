@@ -40,19 +40,24 @@ class Downloader:
         @Return: Nothing
         @Author: Stavros Gkounis (Steve Gkounis)
         """
-        ydl_options = {
-            'format' : 'bestaudio/best',
-            'postprocessors' : [{
-                'key' : 'FFmpegExtractAudio',
-                'preferredcodec' : 'mp3',
-                'preferredquality' : '192'
-            }],
-            'logger' : YoutubeDL_Logger.YoutubeDL_Logger(),
-            'progress_hooks' : [self._downloadAndConverterProgressStatus] 
-        }
+        try:
+            ydl_options = {
+                'format' : 'bestaudio/best',
+                'postprocessors' : [{
+                    'key' : 'FFmpegExtractAudio',
+                    'preferredcodec' : 'mp3',
+                    'preferredquality' : '192'
+                }],
+                'logger' : YoutubeDL_Logger.YoutubeDL_Logger(),
+                'progress_hooks' : [self._downloadAndConverterProgressStatus]
+            }
 
-        with youtube_dl.YoutubeDL(ydl_options) as downloader:
-            downloader.download([url])
+            with youtube_dl.YoutubeDL(ydl_options) as downloader:
+                downloader.download([url])
+        
+        except:
+            print("[!] An Error occured during the execution. It seems that youtube_dl itself is responsible")
+            print("[ :) ] Please check if there is a more recent version of youtube_dl available and upgrade to that version")
     
     def _downloadVideo(self, url):
         """
@@ -61,14 +66,19 @@ class Downloader:
         @Return: Nothing
         @Author: Stavros Gkounis (Steve Gkounis)
         """
-        ydl_options = {
-            'format': 'best',
-            'logger': YoutubeDL_Logger.YoutubeDL_Logger(),
-            'progress_hooks' : [self._progressStatus]
+        try:
+            ydl_options = {
+                'format': 'best',
+                'logger': YoutubeDL_Logger.YoutubeDL_Logger(),
+                'progress_hooks' : [self._progressStatus]
             }
 
-        with youtube_dl.YoutubeDL(ydl_options) as downloader:
-            downloader.download([url])
+            with youtube_dl.YoutubeDL(ydl_options) as downloader:
+                downloader.download([url])
+        except:
+            print("[!] An Error occured during the execution. It seems that youtube_dl itself is responsible")
+            print("[ :) ] Please check if there is a more recent version of youtube_dl available and upgrade to that version")
+
     
     def downloadSingleURL(self, downloading_options, url):
         """
@@ -125,18 +135,21 @@ class Downloader:
         @Return : Nothing
         @Author: Stavros Gkounis (Steve Gkounis)
         """
-        user = User.User()
-        downloading_options = user.askForDownloadingOptions()
+        try:
+            user = User.User()
+            downloading_options = user.askForDownloadingOptions()
 
-        if(downloading_options[0] == '1'):
-            url = user.askForUrl() 
-            self.downloadSingleURL(downloading_options, url)
-        elif(downloading_options[0] == '2'):
-            urls = user.askForMultipleUrl()
-            self.downloadMultipleURLs(downloading_options, urls)
-        elif(downloading_options[0] == '3'):
-            urls = user.askForFileWithUrls()
-            self.downloadMultipleURLs(downloading_options, urls)
+            if(downloading_options[0] == '1'):
+                url = user.askForUrl() 
+                self.downloadSingleURL(downloading_options, url)
+            elif(downloading_options[0] == '2'):
+                urls = user.askForMultipleUrl()
+                self.downloadMultipleURLs(downloading_options, urls)
+            elif(downloading_options[0] == '3'):
+                urls = user.askForFileWithUrls()
+                self.downloadMultipleURLs(downloading_options, urls)
+        except KeyboardInterrupt:
+            print("[!] Script was interrupted by the user")
 
 class TDownloader(Downloader):
     """
@@ -198,20 +211,23 @@ class TDownloader(Downloader):
         @Return: Nothing
         @Author: Stavros Gkounis (Steve Gkounis)
         """
-        argsHandler = ArgumentHandler.ArgumentHandler()
-        user = User.User()
-        navigator = Navigator.Navigator()
+        try:
+            argsHandler = ArgumentHandler.ArgumentHandler()
+            user = User.User()
+            navigator = Navigator.Navigator()
 
-        args = argsHandler.listArguments()
-        if(args.singleUrl is not None):
-            self.tDownloadSingleURL(args.justVideo, args.toAudio, args.singleUrl)
-        elif((args.singleUrl is None) and (args.multipleUrl == True)):
-            urls = user.askForMultipleUrl()
-            self.tDownloadMultipleURLs(args.justVideo, args.toAudio, urls)
-        elif((args.singleUrl is None) and (args.multipleUrl == False) and (args.filename is not None)):
-            urls = navigator.dealWithTheFileOfURLs(args.filename)
-            self.tDownloadMultipleURLs(args.justVideo, args.toAudio, urls)
-        elif(args.interactive == True):
-            self.download()
-        else:
-            print("[!] You have to specify '-u' or '-U' or '-f'. For help use the '-h' option")
+            args = argsHandler.listArguments()
+            if(args.singleUrl is not None):
+                self.tDownloadSingleURL(args.justVideo, args.toAudio, args.singleUrl)
+            elif((args.singleUrl is None) and (args.multipleUrl == True)):
+                urls = user.askForMultipleUrl()
+                self.tDownloadMultipleURLs(args.justVideo, args.toAudio, urls)
+            elif((args.singleUrl is None) and (args.multipleUrl == False) and (args.filename is not None)):
+                urls = navigator.dealWithTheFileOfURLs(args.filename)
+                self.tDownloadMultipleURLs(args.justVideo, args.toAudio, urls)
+            elif(args.interactive == True):
+                self.download()
+            else:
+                print("[!] You have to specify '-u' or '-U' or '-f'. For help use the '-h' option")
+        except KeyboardInterrupt:
+            print("[!] Script was interrupted by the user")
