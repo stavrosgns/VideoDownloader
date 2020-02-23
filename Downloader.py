@@ -56,7 +56,7 @@ class Downloader:
                 downloader.download([url])
         
         except:
-            print("[!] An Error occured during the execution. It seems that youtube_dl itself is responsible")
+            print("\n[!] An Error occured during the execution. It seems that youtube_dl itself is responsible")
             print("[ :) ] Please check if there is a more recent version of youtube_dl available and upgrade to that version")
     
     def _downloadVideo(self, url):
@@ -76,7 +76,7 @@ class Downloader:
             with youtube_dl.YoutubeDL(ydl_options) as downloader:
                 downloader.download([url])
         except:
-            print("[!] An Error occured during the execution. It seems that youtube_dl itself is responsible")
+            print("\n[!] An Error occured during the execution. It seems that youtube_dl itself is responsible")
             print("[ :) ] Please check if there is a more recent version of youtube_dl available and upgrade to that version")
 
     
@@ -149,7 +149,7 @@ class Downloader:
                 urls = user.askForFileWithUrls()
                 self.downloadMultipleURLs(downloading_options, urls)
         except KeyboardInterrupt:
-            print("[!] Script was interrupted by the user")
+            print("\n[!] Script was interrupted by the user")
 
 class TDownloader(Downloader):
     """
@@ -177,7 +177,7 @@ class TDownloader(Downloader):
             navigator.changeToMusicFolder()
             self._downloadAndConvert2Mp3(url)
         else:
-            print("[!] Please Select Either '-J' or '-A'")
+            print("\n[!] Please Select Either '-J' or '-A'")
         
     def tDownloadMultipleURLs(self, justVideo, toAudio, urls):
         """
@@ -200,7 +200,7 @@ class TDownloader(Downloader):
             for url in urls:
                 self._downloadAndConvert2Mp3(url)
         else:
-            print("[!] Please Select Either '-J' or '-A'")
+            print("\n[!] Please Select Either '-J' or '-A'")
     
     
     def tDownload(self):
@@ -228,6 +228,6 @@ class TDownloader(Downloader):
             elif(args.interactive == True):
                 self.download()
             else:
-                print("[!] You have to specify '-u' or '-U' or '-f'. For help use the '-h' option")
+                print("\n[!] You have to specify '-u' or '-U' or '-f'. For help use the '-h' option")
         except KeyboardInterrupt:
-            print("[!] Script was interrupted by the user")
+            print("\n[!] Script was interrupted by the user")

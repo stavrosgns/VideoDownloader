@@ -6,7 +6,8 @@
 
 @Version: v1.5
 #TODO -ADD: 3) Advance download status handling (if possible) - Metadata Extractor
-            4) More Information about What's going on in the background
+            4) More Information about What's going on in the background -> It would be great using Threads
+            
 
 #TODO -Correct:
 
